@@ -33,22 +33,27 @@ function App() {
         b: 'B',
       }
 
-      const sharpMap: Record<string, NoteName> = {
-        r: 'C#',
-        t: 'D#',
-        y: 'F#',
-        u: 'G#',
-        i: 'A#',
-      }
+      // sharps with Shift + letter (where a sharp exists)
+      if (event.shiftKey) {
+        const sharpFromLetter: Partial<Record<string, NoteName>> = {
+          c: 'C#',
+          d: 'D#',
+          f: 'F#',
+          g: 'G#',
+          a: 'A#',
+        }
+        const sharpName = sharpFromLetter[key]
+        if (!sharpName) return
 
-      let name: NoteName | undefined
-      if (key in naturalMap) {
-        name = naturalMap[key]
-      } else if (key in sharpMap) {
-        name = sharpMap[key]
-      } else {
+        event.preventDefault()
+        const note: Note = { name: sharpName, octave }
+        playOrganNote(note)
+        setLastNote(note)
         return
       }
+
+      const name = naturalMap[key]
+      if (!name) return
 
       event.preventDefault()
       const note: Note = { name, octave }
@@ -106,13 +111,13 @@ function App() {
           <div className="hint">
             <p>
               <strong>Keyboard control</strong>:{' '}
-              white keys with <code>C D E F G A B</code> and black keys with{' '}
-              <code>R (C#) T (D#) Y (F#) U (G#) I (A#)</code> in the current
-              octave. Press <code>Alt + 2–6</code> to change octave.
+              white keys with <code>C D E F G A B</code> and sharps with{' '}
+              <code>Shift + C / D / F / G / A</code> in the current octave.
+              Press <code>Alt + 2–6</code> to change octave.
             </p>
             <p>
-              Example: C4 = <code>C</code>, C♯4 = <code>R</code>, D4 ={' '}
-              <code>D</code>, etc.
+              Example: C4 = <code>C</code>, C♯4 = <code>Shift + C</code>, D4 ={' '}
+              <code>D</code>, D♯4 = <code>Shift + D</code>, etc.
             </p>
           </div>
         </section>
