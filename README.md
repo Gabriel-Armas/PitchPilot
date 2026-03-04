@@ -2,6 +2,8 @@
 
 PitchPilot is a small web app to train your **ear** and **voice** by matching sung notes to a piano keyboard.
 
+This repository contains the source code for the experimental beta. The main app lives in the `pitch-pilot` folder.
+
 > **Status:** experimental **beta** – the UI, sounds, and behavior may change frequently.
 
 ### Features
@@ -22,21 +24,24 @@ PitchPilot is a small web app to train your **ear** and **voice** by matching su
     - See the live frequency in Hz.
     - Watch a needle showing how many cents sharp/flat you are.
 
-### Tech stack
+### Getting started
 
-- **Frontend:** React + TypeScript (Vite)
-- **Audio:** Web Audio API (custom organ‑style synth + pitch detection via autocorrelation)
-- **Runtime:** Browser only, no backend required.
-
-### Getting started (local)
+Clone the repo and run the app from the `pitch-pilot` folder:
 
 ```bash
-cd pitch-pilot
+git clone https://github.com/Gabriel-Armas/PitchPilot.git
+cd PitchPilot/pitch-pilot
 npm install
 npm run dev
 ```
 
 Then open the URL printed by Vite (usually `http://localhost:5173`) and allow microphone access for the tuner.
+
+### Tech stack
+
+- **Frontend:** React + TypeScript (Vite)
+- **Audio:** Web Audio API (custom organ‑style synth + pitch detection via autocorrelation)
+- **Runtime:** Browser only, no backend required.
 
 ### Deployment
 
