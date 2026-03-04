@@ -2,8 +2,8 @@ import './App.css'
 import { useCallback, useEffect, useState } from 'react'
 import { Piano } from './Piano'
 import { Tuner } from './Tuner'
-import type { Note } from './audio'
-import { NOTES_IN_OCTAVE, playOrganNote } from './audio'
+import type { Note, NoteName } from './audio'
+import { playOrganNote } from './audio'
 
 function App() {
   const [octave, setOctave] = useState(4)
@@ -14,34 +14,43 @@ function App() {
 
   const handleKeyboard = useCallback(
     (event: KeyboardEvent) => {
-      if (!event.altKey) return
       const key = event.key.toLowerCase()
 
-      if (key >= '2' && key <= '6') {
+      if (event.altKey && key >= '2' && key <= '6') {
         setOctave(clampOctave(Number(key)))
         return
       }
 
-      const map: Record<string, number> = {
-        a: 0,
-        w: 1,
-        s: 2,
-        e: 3,
-        d: 4,
-        f: 5,
-        t: 6,
-        g: 7,
-        y: 8,
-        h: 9,
-        u: 10,
-        j: 11,
+      if (event.metaKey || event.ctrlKey || event.altKey) return
+
+      const naturalMap: Record<string, NoteName> = {
+        c: 'C',
+        d: 'D',
+        e: 'E',
+        f: 'F',
+        g: 'G',
+        a: 'A',
+        b: 'B',
       }
 
-      if (!(key in map)) return
+      const sharpMap: Record<string, NoteName> = {
+        r: 'C#',
+        t: 'D#',
+        y: 'F#',
+        u: 'G#',
+        i: 'A#',
+      }
+
+      let name: NoteName | undefined
+      if (key in naturalMap) {
+        name = naturalMap[key]
+      } else if (key in sharpMap) {
+        name = sharpMap[key]
+      } else {
+        return
+      }
 
       event.preventDefault()
-      const index = map[key]
-      const name = NOTES_IN_OCTAVE[index]
       const note: Note = { name, octave }
       playOrganNote(note)
       setLastNote(note)
@@ -97,12 +106,13 @@ function App() {
           <div className="hint">
             <p>
               <strong>Keyboard control</strong>:{' '}
-              <code>Alt + A W S E D F T G Y H U J</code> for notes in the
-              current octave. Press <code>Alt + 2–6</code> to change octave.
+              white keys with <code>C D E F G A B</code> and black keys with{' '}
+              <code>R (C#) T (D#) Y (F#) U (G#) I (A#)</code> in the current
+              octave. Press <code>Alt + 2–6</code> to change octave.
             </p>
             <p>
-              Example: to approximate your idea for C♯4, press{' '}
-              <code>Alt + W</code> when octave is 4.
+              Example: C4 = <code>C</code>, C♯4 = <code>R</code>, D4 ={' '}
+              <code>D</code>, etc.
             </p>
           </div>
         </section>

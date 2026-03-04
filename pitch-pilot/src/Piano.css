@@ -15,10 +15,7 @@
   left: 0;
   right: 0;
   height: 60%;
-  display: flex;
-  justify-content: space-between;
   pointer-events: none;
-  padding: 0 1.5rem;
 }
 
 .piano-key {
@@ -42,10 +39,12 @@
 }
 
 .piano-key.black {
-  position: relative;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
   width: 40px;
   height: 120px;
-  margin: 0 6px;
+  margin: 0;
   background: linear-gradient(to bottom, #33343f, #070712);
   border-radius: 0 0 4px 4px;
   box-shadow: 0 0 0 1px #050509, 0 3px 6px rgba(0, 0, 0, 0.45);
@@ -80,20 +79,3 @@
   background: rgba(0, 0, 0, 0.8);
   color: #f3f3f8;
 }
-
-.piano-key-Cs {
-  margin-left: 32px;
-}
-.piano-key-Ds {
-  margin-left: 16px;
-}
-.piano-key-Fs {
-  margin-left: 40px;
-}
-.piano-key-Gs {
-  margin-left: 16px;
-}
-.piano-key-As {
-  margin-left: 16px;
-}
-
