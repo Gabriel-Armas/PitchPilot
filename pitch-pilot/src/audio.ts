@@ -56,8 +56,8 @@ export function playOrganNote(note: Note, durationMs = 700): void {
 
   const gain = ctx.createGain()
   gain.gain.setValueAtTime(0, now)
-  gain.gain.linearRampToValueAtTime(0.8, now + 0.02)
-  gain.gain.linearRampToValueAtTime(0.6, now + 0.1)
+  gain.gain.linearRampToValueAtTime(1.2, now + 0.02)
+  gain.gain.linearRampToValueAtTime(0.9, now + 0.12)
   gain.gain.exponentialRampToValueAtTime(0.001, now + durationMs / 1000)
 
   const harmonics = [1, 2, 3] as const
@@ -68,7 +68,7 @@ export function playOrganNote(note: Note, durationMs = 700): void {
     osc.frequency.setValueAtTime(frequency * multiplier, now)
 
     const partialGain = ctx.createGain()
-    const level = index === 0 ? 1 : 0.4 / multiplier
+    const level = index === 0 ? 1.1 : 0.6 / multiplier
     partialGain.gain.setValueAtTime(level, now)
     partialGain.gain.exponentialRampToValueAtTime(
       0.001,
